@@ -1,0 +1,6 @@
+@CMSC447_T7.Server_HostAddress = http://localhost:5208
+
+GET {{CMSC447_T7.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
