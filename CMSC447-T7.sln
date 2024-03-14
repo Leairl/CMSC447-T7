@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSC447-T7.backend", "CMSC447-T7.backend\CMSC447-T7.backend.csproj", "{344ABDF5-D7B8-41B4-8C84-CDB6E6C530AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMSC447-T7.backend", "CMSC447-T7.backend\CMSC447-T7.backend.csproj", "{344ABDF5-D7B8-41B4-8C84-CDB6E6C530AC}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "cmsc447-t7.frontend", "cmsc447-t7.frontend\cmsc447-t7.frontend.esproj", "{6E9064CE-D0F6-4BD6-9919-5467E61D4974}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSC447-T7.database", "CMSC447-T7.database\CMSC447-T7.database.csproj", "{E7214E22-834B-43C4-A087-8A47AFA48D16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{6E9064CE-D0F6-4BD6-9919-5467E61D4974}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E9064CE-D0F6-4BD6-9919-5467E61D4974}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6E9064CE-D0F6-4BD6-9919-5467E61D4974}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E7214E22-834B-43C4-A087-8A47AFA48D16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7214E22-834B-43C4-A087-8A47AFA48D16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7214E22-834B-43C4-A087-8A47AFA48D16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7214E22-834B-43C4-A087-8A47AFA48D16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
