@@ -1,37 +1,31 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ThemeService } from './theme.service';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import { RouterModule} from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
-  public forecasts: WeatherForecast[] = [];
+export class AppComponent {
+  isDarkMode: boolean;
 
-  constructor(private http: HttpClient) {}
-
-  ngOnInit() {
-    this.getForecasts();
-  }
-
-  getForecasts() {
-    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
-      (result) => {
-        this.forecasts = result;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
-
-  title = 'cmsc447-t7.client';
+constructor(private themeService: ThemeService) {
+  this.themeService.initTheme(); /* gets data from the initTheme in theme Service to display color */
+  this.isDarkMode = this.themeService.isDarkMode(); /* gets data from the isdarkmode in theme Service to display dark mode */
 }
+  toggleDarkMode() {
+    this.isDarkMode = this.themeService.isDarkMode();
+    if (this.isDarkMode) {
+      this.themeService.update('light-mode');
+    } else {
+      this.themeService.update('dark-mode');
+    }
+    this.isDarkMode = ! this.isDarkMode
+  }
+}
+
