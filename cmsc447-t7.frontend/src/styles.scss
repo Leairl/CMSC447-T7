@@ -1,0 +1,62 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+
+$mat-primary-scheme: (
+  100: #c5cae9,
+  500: #61699a,
+  700: #303f9f,
+  contrast: (
+    100: rgba(0, 0, 0, 0.87),
+    500: #ffffff,
+    700: #ffffff,
+  ),
+);
+$mat-accent-scheme: (
+  100: #ff80ab,
+  500: #ff4081,
+  700: #f50057,
+  contrast: (
+    100: rgba(0, 0, 0, 0.87),
+    500: rgba(0, 0, 0, 0.87),
+    700: #ffffff,
+  ),
+);
+
+$my-primary: mat.define-palette($mat-primary-scheme);
+$my-accent: mat.define-palette($mat-accent-scheme);
+
+// The "warn" palette is optional and defaults to red if not specified.
+$my-warn: mat.define-palette(mat.$red-palette);
+
+$my-light-theme: mat.define-light-theme((
+ color: (
+   primary: $my-primary,
+   accent: $my-accent,
+   warn: $my-warn,
+ ),
+ typography: mat.define-typography-config(),
+ density: 0,
+));
+
+$my-dark-theme: mat.define-dark-theme((
+ color: (
+   primary: $my-primary,
+   accent: $my-accent,
+   warn: $my-warn,
+ ),
+ typography: mat.define-typography-config(),
+ density: 0,
+));
+.light-mode {
+    @include mat.core-theme($my-light-theme);
+}
+.dark-mode {
+    @include mat.core-theme($my-dark-theme);
+    background-color: #333;
+    color: white;
+
+}
+@include mat.all-component-themes($my-dark-theme);
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
