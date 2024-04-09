@@ -15,9 +15,9 @@ namespace CMSC447_T7.database.Models
         [Column(TypeName = "varchar(50)")]
         public string? Email { get; set; }
         [ForeignKey("ShippingAddress")]
-        public int ShippingAddressId { get; set; }
+        public int? ShippingAddressId { get; set; }
         [ForeignKey("BillingAddress")]
-        public int BillingAddressId { get; set; }
+        public int? BillingAddressId { get; set; }
         
         //Navigation Properties
         public Address? ShippingAddress { get; set; }

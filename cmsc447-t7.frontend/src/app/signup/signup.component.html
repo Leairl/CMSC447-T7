@@ -5,7 +5,7 @@
       Create a UMBC online account or <a routerLink="/login">sign in</a>
     </h4>
     <!-- form to create multiple rows of fields and data is all inside of that form-->
-    <form [formGroup]="passwordForm" >
+    <form [formGroup]="signupForm" >
         <!-- (submit)="onSubmit()" -->
 
       <mat-form-field appearance="outline" class = "centered">
@@ -44,7 +44,8 @@
         }
       </mat-form-field>
       <div>
-        <button class = "centered" mat-stroked-button color="primary">Login</button>
+        <button (click)="onSignup()" class = "centered" mat-stroked-button color="primary">Sign Up</button> 
+        <!-- button associated with sign up in database -->
       </div>
     </form>
     </div>
