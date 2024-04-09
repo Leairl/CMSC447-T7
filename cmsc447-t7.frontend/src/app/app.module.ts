@@ -19,8 +19,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCardModule } from '@angular/material/card';
+import { ItemcardComponent } from './itemcard/itemcard.component';
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SignupComponent, HomeComponent],
+  declarations: [AppComponent, LoginComponent, SignupComponent, HomeComponent, ItemcardComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -36,6 +40,9 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
+    MatGridListModule,
+    MatPaginatorModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

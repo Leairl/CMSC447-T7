@@ -1,1 +1,23 @@
-<p>home works!</p>
+<form class="header">
+    <mat-form-field class="centered">
+      <input matInput placeholder="Search UMBC Online" value="">
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <div class= 'pad'>
+        <div *ngFor= 'let item of items' class= 'itemtile'>
+            <itemcard [itemId]= item ></itemcard>
+        </div>
+    </div>
+    <div style= "display: flex"> 
+        <div class = "bottom_left">
+            <a routerLink="/login">2024 UMBCONLINE.COM</a>
+        </div> 
+            <div class = "center">
+                <a routerLink="/login">TERMS AND CONDITIONS</a>
+            </div>
+        <div class = "bottom_right ">
+            <a routerLink="/login">PRIVACY POLICY</a>
+        </div>
+    </div>
+  </form>
+
