@@ -1,4 +1,5 @@
 using CMSC447_T7.backend.Helpers;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 // App Settings
 var configuration = new ConfigurationBuilder()
@@ -17,7 +18,32 @@ builder.Services.AddSwaggerGen();
 //Connect to the database
 DbHelper.AddDatabase(builder.Services, configuration.GetConnectionString("Default"));
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+
+            //you can configure your custom policy
+            builder.AllowAnyOrigin()
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+        });
+});
+
+//.............
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme) //add authentication cookie after login
+    .AddCookie(options =>
+    {
+        options.Events.OnRedirectToLogin = (context) =>
+        {
+            context.Response.StatusCode = 401;
+            return Task.CompletedTask;
+        };
+    });
+
 var app = builder.Build();
+app.UseCors();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
@@ -31,11 +57,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseAuthentication(); //authentication (checks if user exists) of API calls to backend
+app.UseAuthorization(); //authorization (already a user and allowed to make changes - are you allowed to access this page)
 
 app.MapControllers();
 DbHelper.CreateOrUpdateDatabase(app);
 
 app.MapFallbackToFile("/index.html");
+
 
 app.Run();

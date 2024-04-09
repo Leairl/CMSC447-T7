@@ -1,0 +1,1 @@
+﻿public record UserClaim(string Type, string Value);

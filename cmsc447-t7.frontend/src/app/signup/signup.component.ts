@@ -5,6 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { merge } from 'rxjs';
 import { confirmPasswordValidator } from './confirm-password.validator';
+import { UserService } from '../services/user.service';
 
 export const StrongPasswordRegx: RegExp =
   /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
@@ -20,7 +21,7 @@ export class SignupComponent {
   password = new FormControl('', [Validators.required, Validators.pattern(StrongPasswordRegx)]);
   confirm_password = new FormControl('', [Validators.required, Validators.pattern(StrongPasswordRegx)]);
 
-  passwordForm: FormGroup = new FormGroup({
+  signupForm: FormGroup = new FormGroup({
     email: this.email,
     password: this.password,
     confirm_password: this.confirm_password,
@@ -32,7 +33,7 @@ export class SignupComponent {
   confirmPasswordPatternErrorMessage = [];
   passwordPatternErrorMessage = [];
 
-  constructor() {
+  constructor(private user: UserService) {
     merge(this.email.statusChanges, this.email.valueChanges)  /* updates when user types a character for email*/
       .pipe(takeUntilDestroyed()) /* .pipe - gets values from the events, typed a character in the field*/
       .subscribe(() => this.updateErrorEmailMessage()); /* .subscribe - update events(status and value changes) when events are activated (call events on field for frontend display)*/
@@ -43,7 +44,23 @@ export class SignupComponent {
       .pipe(takeUntilDestroyed()) /* .pipe - gets values from the events, typed a character in the field*/
       .subscribe(() => this.updateErrorConfirmPasswordMessage()); /* .subscribe - update events(status and value changes) when events are activated (call events on field for frontend display)*/
   }
-
+  onSignup() {
+    if (this.signupForm.valid) {  /* validation check */
+    var data = {
+      email: this.email.value,
+      passwordHash: this.password.value,
+    }
+    this.user.signup(data) /* send login info to database for checking*/
+    .subscribe({
+      next:(res)=>{
+        alert(res.message)
+      },
+      error:(err)=>{
+        alert(err?.error.message)
+      }
+    })
+    }
+  }
   updateErrorEmailMessage() {
     if (this.email.hasError('required')) {
       this.errorMessage = 'You must enter a value';
