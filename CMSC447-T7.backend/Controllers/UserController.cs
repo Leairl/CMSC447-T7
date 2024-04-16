@@ -77,11 +77,11 @@ namespace CMSC447_T7.backend.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme); //clear cookie/token when logging out
         }
-        [Authorize]
+        [Authorize] //has a valid cookie to read claims out of cookie to return to user.
         [HttpGet("user")]
         public IActionResult GetUser()
         {
-            var userClaims = User.Claims.Select(x => new UserClaim(x.Type, x.Value)).ToList();
+            var userClaims = User.Claims.Select(x => new UserClaim(x.Type, x.Value)).ToList(); //establishing var userClaims to retrieve email from cookie in UI.
             return Ok(userClaims);
         }
     }

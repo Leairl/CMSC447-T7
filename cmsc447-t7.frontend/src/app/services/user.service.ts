@@ -15,7 +15,9 @@ export interface Response {
 })
 export class UserService {
 
+  public hasSignedIn: boolean = false;
   private baseUrl:string = "/api/User/"
+  public email:string = ""
   constructor(private http : HttpClient) { } /* request to backend from browser*/
 
   signup(userObject:any){ /*any - any type for userObject */
@@ -31,11 +33,15 @@ public signOut() {
 public user() {
   return this.http.get<UserClaim[]>(`${this.baseUrl}user`);
 }
-public isSignedIn(): Observable<boolean> {
-  return this.user().pipe(
-      map((userClaims) => {
-          const hasClaims = userClaims.length > 0;
-          return !hasClaims ? false : true;
+public isSignedIn(): Observable<boolean> {  //backend validation
+  return this.user().pipe(    //requests from the backend to validate the cookie for the user account (ASP.net handles cookie auth.)
+      map((userClaims) => { //reference to all components when authenticating user account while signing in
+          const hasClaims = userClaims.length > 0;  //gets claims out of cookie that displays email
+          if (hasClaims) {
+            this.hasSignedIn = true;    //if the user has made the attempt to sign in and is successful
+            this.email = userClaims[0].value //display first element in cookie claims (email property) when validated
+          }
+          return !hasClaims ? false : true;   //if there are claims from cookie return true else false
       }),
       catchError((error) => {
         return of(false);
