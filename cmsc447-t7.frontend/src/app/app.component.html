@@ -10,6 +10,11 @@
         <span *ngIf = "this.user.hasSignedIn" >
             {{this.user.email}}
         </span>
+        <a routerLink ="/user">
+            <button mat-icon-button color ="primary">
+                <mat-icon>person</mat-icon>
+            </button>
+        </a>
         <a routerLink="/home">
             <button mat-icon-button color="primary">
                 <mat-icon>home</mat-icon>

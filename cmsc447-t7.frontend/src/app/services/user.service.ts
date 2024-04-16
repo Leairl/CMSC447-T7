@@ -35,8 +35,8 @@ public user() {
 }
 public isSignedIn(): Observable<boolean> {  //backend validation
   return this.user().pipe(    //requests from the backend to validate the cookie for the user account (ASP.net handles cookie auth.)
-      map((userClaims) => { //reference to all components when authenticating user account while signing in
-          const hasClaims = userClaims.length > 0;  //gets claims out of cookie that displays email
+      map((userClaims) => { //array of all components when authenticating user account while signing in
+          const hasClaims = userClaims.length > 0;  // length of total components out of cookie that displays email, etc.
           if (hasClaims) {
             this.hasSignedIn = true;    //if the user has made the attempt to sign in and is successful
             this.email = userClaims[0].value //display first element in cookie claims (email property) when validated
@@ -44,6 +44,8 @@ public isSignedIn(): Observable<boolean> {  //backend validation
           return !hasClaims ? false : true;   //if there are claims from cookie return true else false
       }),
       catchError((error) => {
+        this.hasSignedIn = false;
+        this.email = ""
         return of(false);
     }));
 }

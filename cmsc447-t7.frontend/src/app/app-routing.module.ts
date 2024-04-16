@@ -4,11 +4,15 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ItemComponent } from './item/item.component';
+import { UserComponent } from './user/user.component';
+import { ListingComponent } from './listing/listing.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'user', component: UserComponent},
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomeComponent},
+  { path: 'listing', component: ListingComponent},
   { path: "item/:itemId", component: ItemComponent }, /*item/:itemId in url path goes to ItemComponent*/
   { path: '', redirectTo: '/home', pathMatch: 'full'}, /*pathmatch = redirected home url is exact */
 ];
