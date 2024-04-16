@@ -24,8 +24,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
 import { ItemcardComponent } from './itemcard/itemcard.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { ItemComponent } from './item/item.component';
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SignupComponent, HomeComponent, ItemcardComponent],
+  declarations: [AppComponent, LoginComponent, SignupComponent, HomeComponent, ItemcardComponent, ItemComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
