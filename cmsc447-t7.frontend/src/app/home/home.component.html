@@ -4,7 +4,8 @@
         <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
     <div class= 'pad'>
-        <div *ngFor= 'let item of items' class= 'itemtile'>
+        <div *ngFor= 'let item of items' class= 'itemtile'> 
+            <!-- loops through all items in home component .ts-->
             <itemcard [itemId]= item ></itemcard>
         </div>
     </div>
