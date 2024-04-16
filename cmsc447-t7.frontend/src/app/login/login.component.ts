@@ -13,31 +13,29 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required]);
-  signedIn: boolean = false;
+  password = new FormControl('', [Validators.required])
   errorMessage = '';
 
   loginForm: FormGroup = new FormGroup({ /* groups properties for logging in */
     email: this.email,
     passwordHash: this.password,
   })
-  constructor(private user: UserService, private router: Router) {
+  constructor(public user: UserService, private router: Router) {
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
-      this.user.isSignedIn().subscribe(
-        isSignedIn => {
-            this.signedIn = isSignedIn; /* requests to backend and asks if user is signed in */
-        });
+    this.user.isSignedIn().subscribe(  //execution of isSignedIn for hasSignedIn which includes an update on email in frontend
+    )
   }
 onLogin() {
   if (this.loginForm.valid) {  /* validation check */
   this.user.login(this.loginForm.value) /* send login info to database for checking*/
   .subscribe({
-    next:(res)=>{
-        if (res.isSuccess) {
-          this.router.navigate(['home']);
-        }
+    next:()=>{
+          this.user.isSignedIn().subscribe(
+            isSignedIn => {
+                this.router.navigate(['home']); /*returns to home page after we have logged in */
+            });
     },
     error:(err)=>{
       alert(err?.error.message)

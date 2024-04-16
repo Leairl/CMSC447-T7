@@ -1,13 +1,13 @@
-<mat-card (click)="onClick()" class="card">
+<mat-card *ngIf = "item != undefined" (click)="onClick()" class="card">
     <mat-card-header>
-      <mat-card-title> Item Book {{itemId}} </mat-card-title>
-      <mat-card-subtitle>Chemistry</mat-card-subtitle>
+      <mat-card-title> {{item.name}} </mat-card-title>
+      <mat-card-subtitle>{{item.description}}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image src="https://m.media-amazon.com/images/I/910Ekxlf78L._AC_UF894,1000_QL80_.jpg" alt="atoms first, third edition">
+    <img mat-card-image src= "{{item.imageURL}}">
     <mat-card-actions>
         <button mat-icon-button color="primary">
             <mat-icon>shopping_cart</mat-icon>
         </button>
-      <span>$9.99</span>
+      <span>{{item.price}}</span>
     </mat-card-actions>
   </mat-card>

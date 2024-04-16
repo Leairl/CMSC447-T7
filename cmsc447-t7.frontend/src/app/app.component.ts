@@ -15,16 +15,15 @@ import { UserClaim, UserService } from './services/user.service';
 export class AppComponent {
   isDarkMode: boolean;
   userClaims: UserClaim[] = [];
-  signedIn: boolean = false;
-  constructor(private themeService: ThemeService, private user: UserService) {
+  constructor(private themeService: ThemeService, public user: UserService) {
     this.themeService.initTheme(); /* gets data from the initTheme in theme Service to display color */
     this.isDarkMode = this.themeService.isDarkMode(); /* gets data from the isdarkmode in theme Service to display dark mode */
-    this.user.isSignedIn().subscribe(
-      isSignedIn => {
-          this.signedIn = isSignedIn; /* requests to backend and asks if user is signed in */
-      });
-      this.getUser();      
+
+    this.user.isSignedIn().subscribe( //execution of isSignedIn to get data from backend
+    )
   }
+
+
   toggleDarkMode() {
     this.isDarkMode = this.themeService.isDarkMode();
     if (this.isDarkMode) {
@@ -34,12 +33,6 @@ export class AppComponent {
     }
     this.isDarkMode = !this.isDarkMode
   }
-  getUser() {
-    this.user.user().subscribe(
-      result => {
-        this.userClaims = result;
-        console.log(this.userClaims)
-      });
-  }
+
 }
 

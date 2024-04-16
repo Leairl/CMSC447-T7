@@ -10,10 +10,10 @@ import { ItemService } from '../services/item.service';
 export class ItemComponent {
   itemId: any;
   item: any;
-  constructor(private itemService: ItemService, private route: ActivatedRoute){ // using itemService to get item info (get request)
+  constructor(private itemService: ItemService, private route: ActivatedRoute){ // using itemService to get item info (get request),called once when browser is refreshed
 
   } 
-  ngOnInit() {
+  ngOnInit() {  //navigated to page
     this.route.params.subscribe(params => { //reading URL
       this.itemId = params['itemId']  //pulls itemId out of URL
       this.itemService.item(this.itemId)
