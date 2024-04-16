@@ -18,7 +18,7 @@ export class ItemcardComponent {
   }
   ngOnInit() {  //pulling item from backend
       this.itemService.item(this.itemId) //http request in itemService allows for backend retrieval
-      .subscribe({    //listening for result using pulled out itemId
+      .subscribe({    //listening for result of itemid returned from database
         next:(res)=>{
               this.item = res
                     },

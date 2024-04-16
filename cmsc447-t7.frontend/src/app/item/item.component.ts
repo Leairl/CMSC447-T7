@@ -16,8 +16,8 @@ export class ItemComponent {
   ngOnInit() {  //navigated to page
     this.route.params.subscribe(params => { //reading URL
       this.itemId = params['itemId']  //pulls itemId out of URL
-      this.itemService.item(this.itemId) //if itemid from URL matches item.service backend id
-      .subscribe({    //listening for result using pulled out itemId from URL
+      this.itemService.item(this.itemId) //get request for that item id
+      .subscribe({    //listening for result of item id
         next:(res)=>{
               this.item = res  //returns all properties within that item id
                     },
