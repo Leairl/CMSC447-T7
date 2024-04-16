@@ -16,7 +16,7 @@ export class ItemcardComponent {
   onClick() {
     this.router.navigate(['item/' + this.itemId]); //onClick function to redirects to a new navigation page for a unique itemId
   }
-  ngOnInit() {  //pulling item from database
+  ngOnInit() {  //pulling item from backend
       this.itemService.item(this.itemId) //http request in itemService allows for backend retrieval
       .subscribe({    //listening for result using pulled out itemId
         next:(res)=>{

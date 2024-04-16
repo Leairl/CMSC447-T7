@@ -25,8 +25,10 @@ import { MatCardModule } from '@angular/material/card';
 import { ItemcardComponent } from './itemcard/itemcard.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ItemComponent } from './item/item.component';
+import { ListingComponent } from './listing/listing.component';
+import { UserComponent } from './user/user.component';
 @NgModule({
-  declarations: [AppComponent, LoginComponent, SignupComponent, HomeComponent, ItemcardComponent, ItemComponent],
+  declarations: [AppComponent, LoginComponent, SignupComponent, HomeComponent, ItemcardComponent, ItemComponent, ListingComponent, UserComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
