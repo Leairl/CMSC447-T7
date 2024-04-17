@@ -1,1 +1,58 @@
-<h3>This is the listing page</h3>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+<div style =   "top:90px; font-size:85%">
+    <h2 style ="text-align: center;">
+        Name of your item
+    </h2>
+</div>
+
+<div class="title">
+    <mat-form-field [style.width.%] = "80">
+      <input matInput 
+      placeholder="Enter your item"
+      required>
+    </mat-form-field>
+</div>
+
+<div class="quantity">
+    <h2 style = "text-align: center;">
+        Quantity
+    </h2>
+</div>
+
+
+<div class="container">
+    <div class="input-container">
+        <input type="number">
+    </div>
+</div>
+
+<hr>
+
+<div style="text-align: center; margin-top: 40px;">
+    <h2>Description</h2>
+</div>
+
+<div style="text-align: center; margin-top: 10px;"> 
+    <mat-form-field [style.width.%]="80"> 
+        <textarea matInput required name="description" rows="5" placeholder="Enter description" style="resize: none;"></textarea> <!-- Added style="resize: none;" -->
+    </mat-form-field>
+</div>
+
+<div style="text-align: center; margin-top: 20px;">
+    <h2>Add Photos</h2>
+    <input type="file" (change)="onFileSelected($event)" accept="image/*" multiple>
+    <div *ngFor="let image of imageUrls" style="display: inline-block; margin: 10px;">
+        <img [src]="image" alt="Uploaded Image" style="max-width: 200px; max-height: 200px;">
+    </div>
+</div>
+
+
+<hr>
+
+<div style="text-align: center; margin-top: 20px;">
+    <button mat-raised-button color="primary" type="submit">Create Listing</button>
+</div>
+
+
+</form>
