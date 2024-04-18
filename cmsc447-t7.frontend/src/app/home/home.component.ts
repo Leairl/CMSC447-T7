@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ItemcardComponent } from '../itemcard/itemcard.component';
+import { ItemService } from '../services/item.service';
 
 @Component({
   selector: 'app-home',
@@ -8,5 +9,12 @@ import { ItemcardComponent } from '../itemcard/itemcard.component';
   
 })
 export class HomeComponent {
-  items:number[] = [1,2,3,4,5,6,7,8];
+  items:number[] = [] //subscribe function inserts item ids into list
+  constructor(private itemService: ItemService) {
+
+  this.itemService.getAllItems()
+  .subscribe(res => { 
+    this.items = res  //insertion of items into list
+  })
+  }
 }

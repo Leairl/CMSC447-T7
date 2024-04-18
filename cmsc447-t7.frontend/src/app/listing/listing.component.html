@@ -1,58 +1,54 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-<div style =   "top:90px; font-size:85%">
-    <h2 style ="text-align: center;">
-        Name of your item
-    </h2>
-</div>
-
-<div class="title">
-    <mat-form-field [style.width.%] = "80">
-      <input matInput 
-      placeholder="Enter your item"
-      required>
-    </mat-form-field>
-</div>
-
-<div class="quantity">
-    <h2 style = "text-align: center;">
-        Quantity
-    </h2>
-</div>
+<mat-card class="card">
+    <mat-card-header>
+        <mat-card-title-group>
+          <mat-card-title>Post an Item</mat-card-title>
+        </mat-card-title-group>
+      </mat-card-header>
+    <form #itemsForm="ngForm" (ngSubmit)="onSubmit(itemsForm.value)">
+        <div class="field">
+            <mat-form-field  appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="" required name="name" ngModel>
+            </mat-form-field>
+        </div>
+        
 
 
-<div class="container">
-    <div class="input-container">
-        <input type="number">
-    </div>
-</div>
+        <div class="field">
+            <mat-form-field appearance="outline">
+                <mat-label>Quantity</mat-label>
+                <input matInput type="number" name="quantity" ngModel>
+            </mat-form-field>
+        </div>
+        
+        <div class="field">
+            <mat-form-field  appearance="outline">
+                <mat-label>Price</mat-label>
+                <input matInput placeholder="" required name="price" ngModel>
+            </mat-form-field>
+        </div>
 
-<hr>
+        <div class="field">
+            <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <textarea matInput required name="description" ngModel rows="5" placeholder="Enter description"
+                    style="resize: none;"></textarea> <!-- Added style="resize: none;" -->
+            </mat-form-field>
+        </div>
 
-<div style="text-align: center; margin-top: 40px;">
-    <h2>Description</h2>
-</div>
+        <div class="field">
+            <input type="file" style="display: none" #fileInput (change)="onFileSelected($event)" accept="image/*">
+            <button mat-raised-button color="primary" (click)="onClickFileInputButton($event)">Add Image<mat-icon iconPositionEnd>image</mat-icon></button>
+            <div *ngIf="image != null" style="display: inline-block; margin: 10px;">
+                <img [src]="image" alt="Uploaded Image" style="max-width: 200px; max-height: 200px;">
+            </div>
+        </div>
 
-<div style="text-align: center; margin-top: 10px;"> 
-    <mat-form-field [style.width.%]="80"> 
-        <textarea matInput required name="description" rows="5" placeholder="Enter description" style="resize: none;"></textarea> <!-- Added style="resize: none;" -->
-    </mat-form-field>
-</div>
-
-<div style="text-align: center; margin-top: 20px;">
-    <h2>Add Photos</h2>
-    <input type="file" (change)="onFileSelected($event)" accept="image/*" multiple>
-    <div *ngFor="let image of imageUrls" style="display: inline-block; margin: 10px;">
-        <img [src]="image" alt="Uploaded Image" style="max-width: 200px; max-height: 200px;">
-    </div>
-</div>
-
-
-<hr>
-
-<div style="text-align: center; margin-top: 20px;">
-    <button mat-raised-button color="primary" type="submit">Create Listing</button>
-</div>
+        <div class="field" style="text-align: center; margin-top: 20px;">
+            <button mat-raised-button color="primary" type="submit">Create Listing</button>
+        </div>
 
 
-</form>
+    </form>
+</mat-card>
