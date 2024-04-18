@@ -7,6 +7,8 @@ namespace CMSC447_T7.database
     public class DatabaseContext : DbContext
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options) :base(options){
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
             this.ChangeTracker.LazyLoadingEnabled = false;
         }
         public DbSet<Address> Addresses { get; set; }

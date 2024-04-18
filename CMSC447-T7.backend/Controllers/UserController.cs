@@ -38,6 +38,7 @@ namespace CMSC447_T7.backend.Controllers
             var claims = new List<Claim>
             {
                 new Claim(type: ClaimTypes.Email, value: user.Email),
+                new Claim(type: ClaimTypes.Sid, value: user.Id.ToString()),//sid - security id saves user id to cookie
             };
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             await HttpContext.SignInAsync(

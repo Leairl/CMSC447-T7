@@ -19,7 +19,7 @@ namespace CMSC447_T7.database.Models
         public int Quantity { get; set; }
         [Column(TypeName = "text")]
         public string? Description { get; set; }
-        [Column(TypeName = "varchar(1000)")]
+        [Column(TypeName = "text")]
         public string? ImageURL { get; set; }
 
         //Navigation Properties

@@ -10,7 +10,7 @@
         <span *ngIf = "this.user.hasSignedIn" >
             {{this.user.email}}
         </span>
-        <a routerLink ="/user">
+        <a *ngIf = "this.user.hasSignedIn" routerLink ="/user">
             <button mat-icon-button color ="primary">
                 <mat-icon>person</mat-icon>
             </button>

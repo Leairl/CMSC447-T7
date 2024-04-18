@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
 namespace CMSC447_T7.backend.Controllers
 {
@@ -37,6 +38,27 @@ namespace CMSC447_T7.backend.Controllers
                 return NotFound(new { Message = "Item Not Found!" });
             return Ok(
                item);
+        }
+        [Authorize]
+        [HttpPost("")]
+        public async Task<ActionResult> postItemAsync(Item item) //actionresult shows an http request response
+        {
+            if (item == null)
+            {
+                return BadRequest();
+            }
+            await _databaseContext.Items.AddAsync(item); //add item to database
+            item.CreateDate = DateTime.Now; //set date
+            item.UserId = int.Parse(this.User.Claims.ElementAt(1).Value); //user claims grabs id for userid, parse to convert string to int of id. 
+            //Takes claims from user controller for securityid
+            await _databaseContext.SaveChangesAsync(); //save item to database
+            return Ok();
+
+        }
+        [HttpGet("all")]
+        public async Task<ActionResult> GetAll()
+        {
+            return Ok(await _databaseContext.Items.Select(item => item.Id).ToListAsync()); //takes items from databasecontext and selects all ids associated to items
         }
     }
 }
