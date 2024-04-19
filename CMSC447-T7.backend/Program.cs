@@ -11,6 +11,10 @@ var configuration = new ConfigurationBuilder()
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+// Add Stripe API key from appsettings.json
+var stripeApiKey = configuration["Stripe:ApiKey"]; 
+Stripe.StripeConfiguration.ApiKey = stripeApiKey;
 // Add services to the container.
 
 builder.Services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

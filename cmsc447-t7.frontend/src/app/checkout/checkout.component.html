@@ -1,0 +1,23 @@
+<h1 class="header centered">
+  Check your cart before you checkout!
+</h1> <br />
+
+<div *ngIf="currReceipt && currReceipt.receiptItems.length > 0">
+  <mat-card *ngFor="let rItem of currReceipt.receiptItems">
+    <mat-card-header>
+      <mat-card-title>{{ rItem.item.name }}</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image [src]="rItem.item.imageURL" alt="Item Image">
+    <mat-card-content>
+      <p>Price: {{ rItem.item.price }}</p>
+      <p>Quantity: {{ rItem.quantity }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button color="warn" (click)="onRemove(rItem.id)">Remove</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<div style="margin-top: 20px;">
+  <button mat-raised-button color="primary" (click)="checkout()">Checkout</button>
+</div>
