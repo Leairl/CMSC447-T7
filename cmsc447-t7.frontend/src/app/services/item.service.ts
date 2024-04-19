@@ -28,6 +28,11 @@ public itemAdd(item:any): Observable<any> {
 public getAllItems(): Observable<any> {  
   return this.http.get<any>(`${this.baseUrl}/all`); //get request and is identified in the backend.
 }
-
+public getAllItemsForUser(): Observable<any> {  
+  return this.http.get<any>(`${this.baseUrl}/allUser`); //get request and is identified in the backend.
+}
+public search(searchText:any): Observable<any> { /*any - any type for itemId */
+    return this.http.get<any>(`${this.baseUrl}/search?searchText=${searchText}`); /* ` - string interpolation (insertion from vars of other strings)*/
+  }
 
 }

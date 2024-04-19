@@ -60,5 +60,19 @@ namespace CMSC447_T7.backend.Controllers
         {
             return Ok(await _databaseContext.Items.Select(item => item.Id).ToListAsync()); //takes items from databasecontext and selects all ids associated to items
         }
+        [Authorize]
+        [HttpGet("allUser")]
+        public async Task<ActionResult> GetAllForUser()
+        {
+            var UserId = int.Parse(this.User.Claims.ElementAt(1).Value); //user claims grabs id for userid, parse to convert string to int of id. 
+            return Ok(await _databaseContext.Items.Where(item => item.UserId == UserId).Select(item => item.Id).ToListAsync()); //searches for item of a user using foreign key (userid in item) and if found, returns
+        }
+        [HttpGet("search")]
+        public async Task<ActionResult> SearchHome(string searchText)
+        {
+            searchText = searchText.Trim();
+            searchText = searchText.ToLower();
+            return Ok(await _databaseContext.Items.Where(item => item.Name.ToLower().Contains(searchText) || item.Description.ToLower().Contains(searchText)).Select(item => item.Id).ToListAsync()); //takes items from databasecontext and selects all ids associated to items
+        }
     }
 }

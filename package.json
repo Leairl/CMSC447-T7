@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@hreimer/angular-image-viewer": "^0.14.1",
+    "iv-viewer": "^2.0.1"
+  }
+}

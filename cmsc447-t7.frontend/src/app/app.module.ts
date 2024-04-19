@@ -49,6 +49,7 @@ import { UserComponent } from './user/user.component';
     MatPaginatorModule,
     MatCardModule,
     HttpClientModule,
+    MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

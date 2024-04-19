@@ -1,2 +1,22 @@
-<img class='card' src={{item.imageURL}}>
-<h3>{{item.description}}</h3>
+<div class="padding">
+    <mat-card class='itemImg'>
+        <mat-card-header>
+          </mat-card-header>
+          <mat-card-content>
+            <img class='itemImgSize' src="{{item != null && item.imageURL}}">
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button>Add To Cart</button>
+          </mat-card-actions>
+    </mat-card>
+    <mat-card class ="rightSideBar">
+        <div style="margin-top: 50px">
+        <p class="rowText"> {{item != null && item.name}}</p>
+        <p class="rowText">{{item != null && item.description}}</p>
+        <p class="rowText"> Date Posted: {{item != null && item.createDate}}</p>
+        <p class="rowText">User Posted: {{item != null && item.user.email}}</p>
+        <p class="rowText"> Quantity: {{item != null && item.quantity}}</p>
+        <p class="rowText"> Price: {{item != null && item.price}}</p>
+        </div>
+    </mat-card>
+</div>

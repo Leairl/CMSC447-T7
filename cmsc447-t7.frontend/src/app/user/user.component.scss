@@ -11,3 +11,52 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
+.centered {
+    margin: auto;
+    width: 400px;
+    }
+.header {
+    text-align: center;
+    padding-top: 80px;
+    }
+
+.bottom_left {
+    bottom: 0;
+    float: left;
+    width: 400px;
+}
+.bottom_right {
+    float: right;
+    width: 400px;
+}
+.center { 
+    width:100%; 
+    text-align: center
+}
+.footer{   
+    text-align: center;
+    width: 100%;
+}  
+.link {
+    position:absolute;
+    width:100%;
+    height: 100%;
+    text-align:bottom;
+}
+.pad {
+    flex: auto;
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    width: 40%;
+    flex-wrap: wrap;
+}
+.itemtile {
+    margin: 16px;
+    }
+.main {
+    position: relative; 
+    width: 600px; 
+    height: 200px;
+  }
+  
