@@ -1,7 +1,7 @@
-<mat-card *ngIf = "item != undefined" (click)="onClick()" class="card">
+<mat-card *ngIf = "item != undefined" (click)="onClick()" [ngClass]="{'card': !userProfile, 'userCard': userProfile}">
     <mat-card-header>
       <mat-card-title> {{item.name}} </mat-card-title>
-      <mat-card-subtitle>{{item.description}}</mat-card-subtitle>
+      <mat-card-subtitle *ngIf = "!userProfile">{{item.description}}</mat-card-subtitle>
     </mat-card-header>
     <img mat-card-image src= "{{item.imageURL}}">
     <mat-card-actions>

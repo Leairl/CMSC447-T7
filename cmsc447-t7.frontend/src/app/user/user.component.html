@@ -1,7 +1,21 @@
 <a routerLink="/listing">
-    <div class = "listbutton">
-        <div class = "left_middle">
+    <div style="margin-top: 30px">
+        <div>
             <button mat-flat-button color="primary">Create a Listing</button>
         </div>
     </div>
 </a>
+<form class="header">
+    <div class= 'pad'>
+        <div *ngFor= 'let item of items' class= 'itemtile'> 
+            <!-- loops through all items in home component .ts-->
+            <itemcard [userProfile] = true [itemId]= item ></itemcard>
+        </div>
+        <mat-paginator style="width: 95%" [length]="this.allItems != null && this.allItems.length"
+        [pageSize]="4"
+        [pageSizeOptions]="[4, 8, 12, 16]"
+        aria-label="Select page"
+        (page)="handlePageEvent($event)">
+        </mat-paginator>
+    </div>
+  </form>

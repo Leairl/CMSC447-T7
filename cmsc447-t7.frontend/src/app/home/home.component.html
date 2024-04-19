@@ -1,6 +1,6 @@
-<form class="header">
+<div class="header">
     <mat-form-field class="centered">
-      <input matInput placeholder="Search UMBC Online" value="">
+      <input matInput (keydown)="search($event)" placeholder="Search UMBC Online" [(ngModel)]= "searchText" value="">
         <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
     <div class= 'pad'>
@@ -9,6 +9,12 @@
             <itemcard [itemId]= item ></itemcard>
         </div>
     </div>
+    <mat-paginator [length]="this.allItems != null && this.allItems.length"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page"
+    (page)="handlePageEvent($event)">
+    </mat-paginator>
     <div style= "display: flex"> 
         <div class = "bottom_left">
             <a routerLink="/login">2024 UMBCONLINE.COM</a>
@@ -20,5 +26,6 @@
             <a routerLink="/login">PRIVACY POLICY</a>
         </div>
     </div>
-  </form>
+    
+</div>
 

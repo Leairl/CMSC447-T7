@@ -9,6 +9,7 @@ import { ItemService } from '../services/item.service';
 })
 export class ItemcardComponent {
   @Input() itemId: number = 0;
+  @Input() userProfile: boolean = false;
   public item: any; //item within database 
   constructor(private router: Router, private itemService: ItemService) {
 
