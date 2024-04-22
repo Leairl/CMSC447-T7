@@ -1,4 +1,4 @@
-﻿using CMSC447_T7.database;
+﻿﻿using CMSC447_T7.database;
 using CMSC447_T7.database.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,22 +16,23 @@ namespace CMSC447_T7.backend.Controllers
         }
 
         // GET: api/user/receipt/{id}
-        [HttpGet("receipt/{id}")]
-        public async Task<ActionResult<Receipt>> GetReceipt(int id)
+        [HttpGet("")]
+        public async Task<ActionResult<Receipt>> GetReceipt(int receiptId)
         {
             var receipt = await _databaseContext.Receipts
                 .Include(r => r.ReceiptItems)
-                .FirstOrDefaultAsync(r => r.Id == id);
+                .ThenInclude(ri => ri.Item)
+                .FirstOrDefaultAsync(r => r.Id == receiptId);
 
             if (receipt == null)
             {
-                return NotFound();
+                return NotFound(new { Message = "Receipt Not Found!" });
             }
 
-            return receipt;
+            return Ok(receipt);
         }
 
-        [HttpPost("receipt/{id}")]
+        [HttpPost("")]
         public async Task<ActionResult<Receipt>> CreateReceipt(Receipt receipt)
         {
             if (receipt == null)
@@ -46,7 +47,7 @@ namespace CMSC447_T7.backend.Controllers
         }
 
         // POST: api/user/receipt/{id}/add
-        [HttpPost("receipt/{id}/add")]
+        [HttpPost("add/{receiptId}/{itemId}")]
         public async Task<ActionResult<Receipt>> AddItemToReceipt(int id, ReceiptItem item)
         {
             var receipt = await _databaseContext.Receipts
@@ -55,7 +56,7 @@ namespace CMSC447_T7.backend.Controllers
 
             if (receipt == null)
             {
-                return NotFound();
+                return NotFound(new { Message = "Receipt Not Found!" });
             }
 
             receipt.ReceiptItems.Add(item);
@@ -65,7 +66,7 @@ namespace CMSC447_T7.backend.Controllers
         }
 
         // DELETE: api/user/receipt/{receiptId}/item/{itemId}
-        [HttpDelete("receipt/{receiptId}/remove")]
+        [HttpDelete("remove/{receiptId}/{itemId}")]
         public async Task<ActionResult<Receipt>> RemoveItemFromReceipt(int receiptId, int itemId)
         {
             var receipt = await _databaseContext.Receipts
@@ -74,13 +75,13 @@ namespace CMSC447_T7.backend.Controllers
 
             if (receipt == null)
             {
-                return NotFound();
+                return NotFound(new { Message = "Receipt Not Found!" });
             }
 
             var itemToRemove = receipt.ReceiptItems.FirstOrDefault(i => i.Id == itemId);
             if (itemToRemove == null)
             {
-                return NotFound();
+                return NotFound(new { Message = "Item Not Found!" });
             }
 
             receipt.ReceiptItems.Remove(itemToRemove);
@@ -89,18 +90,18 @@ namespace CMSC447_T7.backend.Controllers
             return Ok(receipt);
         }
 
-                // POST: api/user/receipt/{id}/checkout
-        [HttpPost("receipt/{id}/checkout")]
-        public async Task<ActionResult<string>> CheckoutReceipt(int id)
+        // POST: api/user/receipt/{id}/checkout
+        [HttpPost("stripe/{receiptId}")]
+        public async Task<ActionResult<string>> CheckoutReceipt(int receiptId)
         {
             var receipt = await _databaseContext.Receipts
                 .Include(r => r.ReceiptItems)
                 .ThenInclude(ri => ri.Item)
-                .FirstOrDefaultAsync(r => r.Id == id);
+                .FirstOrDefaultAsync(r => r.Id == receiptId);
 
             if (receipt == null)
             {
-                return NotFound();
+                return NotFound(new { Message = "Receipt Not Found!" });
             }
 
             var lineItems = receipt.ReceiptItems.Select(ri => new SessionLineItemOptions
@@ -129,7 +130,7 @@ namespace CMSC447_T7.backend.Controllers
             var service = new SessionService();
             var session = await service.CreateAsync(options);
 
-            return session.Id;
+            return Ok(session.Url);
         }
     }
 }

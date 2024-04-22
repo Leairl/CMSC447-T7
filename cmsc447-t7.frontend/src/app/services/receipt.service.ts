@@ -9,33 +9,33 @@ import { ReceiptItem } from './interfaces';
 })
 export class ReceiptService {
 
-  private baseUrl = 'http://localhost:4200/api/'; // Update this with proper backend URL
+  private baseUrl = '/api/Receipt/'; // Update this with proper backend URL
 
   constructor(private http: HttpClient) { }
 
   // Get receipt by ID
-  getReceiptById(id: number): Observable<Receipt> {
-    return this.http.get<Receipt>(`${this.baseUrl}/receipt/${id}`);
+  getReceiptById(receiptId: any): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/?receiptID=${receiptId}`);
   }
 
   // Create receipt
-  createReceipt(id: number, newReceipt: Receipt): Observable<Receipt> {
-    return this.http.post<Receipt>(`${this.baseUrl}/receipt/${id}`, newReceipt);
+  createReceipt(receiptId: any, newReceipt: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/?receiptID=${receiptId}`, newReceipt);
   }
 
 
   // Add item to receipt
-  addItemToReceipt(receiptId: number, item: ReceiptItem): Observable<Receipt> {
-    return this.http.post<Receipt>(`${this.baseUrl}/receipt/${receiptId}/add`, item);
+  addItemToReceipt(receiptId: any, item: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/add/?receiptID=${receiptId}`, item);
   }
 
   // Remove item from receipt
   removeItemFromReceipt(receiptId: number, itemId: number): Observable<Receipt> {
-    return this.http.delete<Receipt>(`${this.baseUrl}/receipt/${receiptId}/remove}`);
+    return this.http.delete<Receipt>(`${this.baseUrl}/remove/${receiptId}/${itemId}`);
   }
 
   // Checkout receipt
-  checkoutReceipt(receiptId: number): Observable<string> {
-    return this.http.post<string>(`${this.baseUrl}/receipt/${receiptId}/checkout`, null);
+  checkoutReceipt(receiptId: number): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/stripe/${receiptId}`, null);
   }
 }

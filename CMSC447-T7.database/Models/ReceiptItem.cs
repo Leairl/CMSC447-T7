@@ -11,8 +11,6 @@ namespace CMSC447_T7.database.Models
         public int ItemId { get; set; }
         [ForeignKey("Receipt")]
         public int ReceiptId { get; set; }
-        [Column(TypeName = "smallint")]
-        public int Quantity { get; set; }
 
 
         // Navigation Properties

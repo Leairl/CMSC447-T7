@@ -8,6 +8,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ReceiptService } from "../services/receipt.service";
 import { Receipt, Item, ReceiptItem } from "../services/interfaces"
 import { ActivatedRoute } from '@angular/router';
+import { loadStripe, Stripe } from '@stripe/stripe-js';
 
 @Component({
   selector: 'app-checkout',
@@ -15,11 +16,14 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './checkout.component.scss'
 })
 
+
+
 export class CheckoutComponent {
-  currReceipt: Receipt;
+  currReceipt: any;
   currReceiptID: any;
+  stripeURL: any;
 
-
+  
   constructor(private receiptService: ReceiptService, private route: ActivatedRoute) {
 
   }
@@ -32,6 +36,7 @@ export class CheckoutComponent {
         .subscribe({    //listening for result of receiptID
           next: (res) => {
             this.currReceipt = res  //returns all properties within that receipt id
+            
           },
           error: (err) => {
             alert(err?.error.message)
@@ -41,6 +46,7 @@ export class CheckoutComponent {
   }
 
   onRemove(receiptItemID: number) {
+    
     this.receiptService.removeItemFromReceipt(this.currReceiptID, receiptItemID) //post request for removing items
       .subscribe({    //listening for result item removal
         next: (res) => {
@@ -52,9 +58,24 @@ export class CheckoutComponent {
       })
   }
 
+
+  //Stripe and backend are fine, but URL is just not being passed.
+  //Can access the stripe stuff on my account tho so.
   checkout() {
-    //
-    this.receiptService.checkoutReceipt(this.currReceiptID)
+    this.receiptService.checkoutReceipt(this.currReceiptID) //post request for removing items
+      .subscribe({    //listening for result item removal
+        next: (res) => {
+          this.stripeURL = res;
+          window.location.href = "https://www.google.com";
+        },
+        error: (err) => {
+          alert(err?.error.message)
+        }
+      })
   }
+
+
+
+
 
 }
