@@ -33,6 +33,12 @@ public signOut() {
 public user() {
   return this.http.get<UserClaim[]>(`${this.baseUrl}user`);
 }
+public onBoard(returnUrl:string) {
+  return this.http.get(`${this.baseUrl}onboard-seller?returnUrl=${returnUrl}`,{responseType: 'text'});
+}
+public sellerStatus() {
+  return this.http.get<string[]>(`${this.baseUrl}sellerStatus`);
+}
 public isSignedIn(): Observable<boolean> {  //backend validation
   return this.user().pipe(    //requests from the backend to validate the cookie for the user account (ASP.net handles cookie auth.)
       map((userClaims) => { //array of all components when authenticating user account while signing in
