@@ -2,6 +2,7 @@
 using CMSC447_T7.database.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 using Stripe.Checkout;
 namespace CMSC447_T7.backend.Controllers
 {
@@ -129,6 +130,7 @@ namespace CMSC447_T7.backend.Controllers
             var receipt = await _databaseContext.Receipts
                 .Include(r => r.ReceiptItems)
                 .ThenInclude(ri => ri.Item)
+                .ThenInclude(i => i.User)
                 .FirstOrDefaultAsync(r => r.Id == receiptId);
 
             if (receipt == null)
@@ -149,19 +151,26 @@ namespace CMSC447_T7.backend.Controllers
                 },
                 Quantity = ri.Item.Quantity
             }).ToList();
+             var stripeAccount = receipt.ReceiptItems.First().Item.User.StripeAccountId;
 
             var options = new SessionCreateOptions
             {
                 PaymentMethodTypes = new List<string> { "card" },
                 LineItems = lineItems,
+                PaymentIntentData = new SessionPaymentIntentDataOptions
+                {
+                    TransferData = new SessionPaymentIntentDataTransferDataOptions
+                    {
+                        Amount = lineItems.Sum(i => i.PriceData.UnitAmount),
+                        Destination = stripeAccount
+                    }
+                },
                 Mode = "payment",
                 SuccessUrl = "http://18.188.248.179/home",
                 CancelUrl = "http://18.188.248.179/home"
             };
-
             var service = new SessionService();
             var session = await service.CreateAsync(options);
-
             return Ok(session.Url);
         }
 
