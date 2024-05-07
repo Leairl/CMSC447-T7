@@ -1,10 +1,15 @@
-<a routerLink="/listing">
-    <div style="margin-top: 30px">
-        <div>
-            <button mat-flat-button color="primary">Create a Listing</button>
-        </div>
+
+<div style="margin-top: 30px">
+    <div>
+        <a *ngIf = "sellerErrors.length == 0" routerLink="/listing">
+            <button style = "margin-left: 15px" mat-flat-button color="primary">Create a Listing</button>
+        </a>
+        <button *ngIf = "sellerErrors.length > 0"(click)="onBoard($event)" style = "margin-left: 15px" mat-flat-button color="warn"> Complete Seller Onboarding </button>
     </div>
-</a>
+</div>
+
+
+
 <form class="header">
     <div class= 'pad'>
         <div *ngFor= 'let item of items' class= 'itemtile'> 

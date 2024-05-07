@@ -14,6 +14,9 @@ namespace CMSC447_T7.database.Models
         public string? PasswordHash { get; set; }
         [Column(TypeName = "varchar(50)")]
         public string? Email { get; set; }
+        
+        [Column(TypeName = "varchar(50)")]
+        public string? StripeAccountId { get; set; }
         [ForeignKey("ShippingAddress")]
         public int? ShippingAddressId { get; set; }
         [ForeignKey("BillingAddress")]
