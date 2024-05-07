@@ -6,7 +6,8 @@ namespace CMSC447_T7.database
 {
     public class DatabaseContext : DbContext
     {
-        public DatabaseContext(DbContextOptions<DatabaseContext> options) :base(options){
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+        {
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
             this.ChangeTracker.LazyLoadingEnabled = false;
@@ -16,8 +17,8 @@ namespace CMSC447_T7.database
         public DbSet<ItemReview> ItemReviews { get; set; }
         public DbSet<ItemTag> ItemTags { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
-        public DbSet<ReceiptItem> ReceiptsItems { get; set;}
+        public DbSet<ReceiptItem> ReceiptsItems { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserReview> UserReviews { get; set; } 
+        public DbSet<UserReview> UserReviews { get; set; }
     }
 }

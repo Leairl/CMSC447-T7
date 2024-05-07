@@ -19,14 +19,14 @@ export class ReceiptService {
   }
 
   // Create receipt
-  createReceipt(receiptId: any, newReceipt: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/?receiptID=${receiptId}`, newReceipt);
+  createReceipt(userId: number): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/create/${userId}`, null);
   }
 
 
   // Add item to receipt
-  addItemToReceipt(receiptId: any, item: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/add/?receiptID=${receiptId}`, item);
+  addItemToReceipt(receiptId: any, itemId: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/add/${receiptId}/${itemId}`, null);
   }
 
   // Remove item from receipt
@@ -35,7 +35,12 @@ export class ReceiptService {
   }
 
   // Checkout receipt
-  checkoutReceipt(receiptId: number): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/stripe/${receiptId}`, null);
+  public checkoutReceipt(receiptId: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/stripe/${receiptId}`, null, { responseType: 'text' });
+  }
+
+  // Function to get receipts by user ID
+  getReceiptsByUserId(userId: number): Observable<Receipt[]> {
+    return this.http.get<any>(`${this.baseUrl}/user/${userId}`);
   }
 }

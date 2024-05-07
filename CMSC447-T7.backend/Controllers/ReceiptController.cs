@@ -32,34 +32,66 @@ namespace CMSC447_T7.backend.Controllers
             return Ok(receipt);
         }
 
-        [HttpPost("")]
-        public async Task<ActionResult<Receipt>> CreateReceipt(Receipt receipt)
+        [HttpPost("create/{userId}")]
+        public async Task<ActionResult<Receipt>> CreateReceipt(int userId)
         {
-            if (receipt == null)
+            try {
+                var newReceipt = new Receipt { };
+                await _databaseContext.Receipts.AddAsync(newReceipt); //add item to database
+                newReceipt.UserId = userId;
+                newReceipt.CreateDate = DateTime.Now;
+
+
+                await _databaseContext.SaveChangesAsync(); //save item to database
+                return Ok(newReceipt);
+
+            } 
+            
+            catch (Exception ex) 
             {
-                return BadRequest();
+                return NotFound(new { Message = "Receipt Not Found!" });
             }
-            await _databaseContext.Receipts.AddAsync(receipt); //add item to database
-            receipt.UserId = int.Parse(this.User.Claims.ElementAt(1).Value); //get user ID 
-            await _databaseContext.SaveChangesAsync(); //save item to database
-            return Ok();
+
 
         }
 
         // POST: api/user/receipt/{id}/add
         [HttpPost("add/{receiptId}/{itemId}")]
-        public async Task<ActionResult<Receipt>> AddItemToReceipt(int id, ReceiptItem item)
+        public async Task<ActionResult<Receipt>> AddItemToReceipt(int receiptId, int itemId)
         {
             var receipt = await _databaseContext.Receipts
                 .Include(r => r.ReceiptItems)
-                .FirstOrDefaultAsync(r => r.Id == id);
+                .FirstOrDefaultAsync(r => r.Id == receiptId);
 
             if (receipt == null)
             {
                 return NotFound(new { Message = "Receipt Not Found!" });
             }
 
-            receipt.ReceiptItems.Add(item);
+            var item = await _databaseContext.Items.FindAsync(itemId);
+
+            if (item == null)
+            {
+                return NotFound(new { Message = "Item Not Found!" });
+            }
+
+            // Check if the item is already associated with the receipt
+            var existingReceiptItem = receipt.ReceiptItems.FirstOrDefault(ri => ri.ItemId == itemId);
+            if (existingReceiptItem != null)
+            {
+                return Conflict(new { Message = "Item is already in the receipt!" });
+            }
+
+
+            var receiptItem = new ReceiptItem
+            {
+                ItemId = itemId,
+                ReceiptId = receiptId
+            };
+
+            _databaseContext.ReceiptsItems.Add(receiptItem);
+            receipt.ReceiptItems.Add(receiptItem);
+
             await _databaseContext.SaveChangesAsync();
 
             return Ok(receipt);
@@ -123,8 +155,8 @@ namespace CMSC447_T7.backend.Controllers
                 PaymentMethodTypes = new List<string> { "card" },
                 LineItems = lineItems,
                 Mode = "payment",
-                SuccessUrl = "https://localhost:4200/success",
-                CancelUrl = "https://localhost:4200/cancel"
+                SuccessUrl = "http://18.188.248.179/home",
+                CancelUrl = "http://18.188.248.179/home"
             };
 
             var service = new SessionService();
@@ -132,5 +164,22 @@ namespace CMSC447_T7.backend.Controllers
 
             return Ok(session.Url);
         }
+
+
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<Receipt>>> GetReceiptsByUserId(int userId)
+        {
+            var receipts = await _databaseContext.Receipts
+                .Where(r => r.UserId == userId)
+                .ToListAsync();
+
+            if (receipts == null || !receipts.Any())
+            {
+                return NotFound(new { Message = "No receipts found for the user!" });
+            }
+
+            return Ok(receipts);
+        }
+
     }
 }

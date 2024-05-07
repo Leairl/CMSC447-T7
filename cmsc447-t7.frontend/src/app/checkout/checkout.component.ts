@@ -22,6 +22,7 @@ export class CheckoutComponent {
   currReceipt: any;
   currReceiptID: any;
   stripeURL: any;
+  total: any;
 
   
   constructor(private receiptService: ReceiptService, private route: ActivatedRoute) {
@@ -36,6 +37,7 @@ export class CheckoutComponent {
         .subscribe({    //listening for result of receiptID
           next: (res) => {
             this.currReceipt = res  //returns all properties within that receipt id
+            this.getTotal();
             
           },
           error: (err) => {
@@ -51,6 +53,8 @@ export class CheckoutComponent {
       .subscribe({    //listening for result item removal
         next: (res) => {
           this.currReceipt = res  //update receipt
+          this.getTotal();
+          window.location.reload();
         },
         error: (err) => {
           alert(err?.error.message)
@@ -66,7 +70,8 @@ export class CheckoutComponent {
       .subscribe({    //listening for result item removal
         next: (res) => {
           this.stripeURL = res;
-          window.location.href = "https://www.google.com";
+
+          window.location.href = this.stripeURL;
         },
         error: (err) => {
           alert(err?.error.message)
@@ -74,7 +79,20 @@ export class CheckoutComponent {
       })
   }
 
+  getTotal() {
+    if (this.currReceipt) {
+      this.total = 0;
 
+      this.currReceipt.receiptItems.forEach((receiptItem: ReceiptItem) => {
+        // Add the price of the item multiplied by its quantity to the total
+        this.total += receiptItem.item.price * receiptItem.item.quantity;
+      });
+    } else {
+      // If currReceipt is null or undefined, set total to 0
+      this.total = 0;
+    }
+  }
+  
 
 
 

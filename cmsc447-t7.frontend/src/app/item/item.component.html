@@ -6,7 +6,7 @@
             <img class='itemImgSize' src="{{item != null && item.imageURL}}">
           </mat-card-content>
           <mat-card-actions>
-            <button mat-button>Add To Cart</button>
+            <button mat-button (click)="newItem()">Add To Cart</button>
           </mat-card-actions>
     </mat-card>
     <mat-card class ="rightSideBar">
