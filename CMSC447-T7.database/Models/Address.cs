@@ -24,6 +24,5 @@ namespace CMSC447_T7.database.Models
         public User? BillingAddressUser { get; set; }
         [InverseProperty("ShippingAddress")]
         public User? ShippingAddressUser { get; set; }
-        public ICollection<Receipt>? Receipts { get; set; }
     }
 }
